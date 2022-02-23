@@ -296,6 +296,7 @@ class SessionController < ApplicationController
   end
 
   def create
+    Rails.logger.info "\n \n -------- User Login Endpoint ------------ \n \n"
     params.require(:login)
     params.require(:password)
 

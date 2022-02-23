@@ -2,6 +2,7 @@
 
 class UserActionsController < ApplicationController
   def index
+    byebug
     params.require(:username)
     params.permit(:filter, :offset, :acting_username, :limit)
 

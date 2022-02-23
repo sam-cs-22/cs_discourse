@@ -61,6 +61,7 @@ let userFields = [
   "primary_group_id",
   "flair_group_id",
   "user_notification_schedule",
+  "trust_level"
 ];
 
 export function addSaveableUserField(fieldName) {
@@ -812,6 +813,7 @@ const User = RestModel.extend({
   },
 
   summary() {
+    console.log('this is function that is called via summary controller & route')
     const store = getOwner(this).lookup("service:store");
 
     return ajax(userPath(`${this.username_lower}/summary.json`)).then(
@@ -853,7 +855,7 @@ const User = RestModel.extend({
             }
           });
         }
-
+        console.log(summary);
         return summary;
       }
     );

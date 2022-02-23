@@ -3,6 +3,8 @@ development:
   adapter: postgresql
   database: <%= ENV['DISCOURSE_DEV_DB'] || 'discourse_development' %>
   min_messages: warning
+  username: postgres
+  password: postgres
   pool: 5
   timeout: 5000
   checkout_timeout: <%= ENV['CHECKOUT_TIMEOUT'] || 5 %>
@@ -38,6 +40,8 @@ test:
   adapter: postgresql
   database: <%= test_db %>
   min_messages: warning
+  username: postgres
+  password: postgres
   pool: 5
   timeout: 5000
   advisory_locks: false # Disable until https://github.com/rails/rails/issues/40029 has been resolved.

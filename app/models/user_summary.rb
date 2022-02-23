@@ -170,6 +170,7 @@ class UserSummary
            :topic_count,
            :post_count,
            :time_read,
+           :trust_level,
            to: :user_stat
 
 protected

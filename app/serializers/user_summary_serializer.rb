@@ -3,7 +3,7 @@
 class UserSummarySerializer < ApplicationSerializer
 
   class TopicSerializer < BasicTopicSerializer
-    attributes :category_id, :like_count, :created_at
+    attributes :category_id, :like_count, :created_at, :archetype
   end
 
   class ReplySerializer < ApplicationSerializer
@@ -90,6 +90,7 @@ class UserSummarySerializer < ApplicationSerializer
              :recent_time_read,
              :bookmark_count,
              :can_see_summary_stats
+             :trust_level
 
   def can_see_summary_stats
     scope.can_see_summary_stats?(object.user)
@@ -105,6 +106,10 @@ class UserSummarySerializer < ApplicationSerializer
 
   def time_read
     object.time_read
+  end
+
+  def trust_level
+    object.user.trust_level
   end
 
   def recent_time_read

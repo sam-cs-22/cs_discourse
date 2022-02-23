@@ -397,11 +397,21 @@ class UsersController < ApplicationController
   end
 
   def summary
+    Rails.logger.info "\n Reqestt::::\n #{request.env.inspect} \n \n"
+    request_logger = RequestLogger.new(
+      request_url: request.path_info,
+      request_params: params,
+      request_method: request.request_method,
+      request_addr: request.remote_addr,
+      request_controller: request.controller_class,
+      request_action: action_name
+    )
+    request_logger.save
     @user = fetch_user_from_params(include_inactive: current_user.try(:staff?) || (current_user && SiteSetting.show_inactive_accounts))
     raise Discourse::NotFound unless guardian.can_see_profile?(@user)
 
     response.headers['X-Robots-Tag'] = 'noindex'
-
+    Rails.logger.info "\n \n Incoming request for:::::::::: #{@user.inspect} \n \n"
     respond_to do |format|
       format.html do
         @restrict_fields = guardian.restrict_user_fields?(@user)
@@ -413,6 +423,7 @@ class UsersController < ApplicationController
           serializer = UserSummarySerializer.new(summary, scope: guardian)
           MultiJson.dump(serializer)
         end
+        Rails.logger.info "\n Summary JSON response for API::::\n #{summary_json.inspect} \n \n"        
         render json: summary_json
       end
     end
